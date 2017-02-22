@@ -1,0 +1,25 @@
+.new-tweet h2 {
+  border-bottom: black solid 1px;
+}
+
+.container .new-tweet {
+  border: #d3d3d3 solid 1px;
+  border-radius: 5px;
+  background-color: #E8E8EE;
+  margin: 0 2em;
+  padding: 0 1em;
+}
+
+.container textarea {
+  width: 100%;
+  margin-bottom: 3px;
+}
+
+.container .counter {
+  float: right;
+  margin-right: 5px;
+}
+
+.counter.red {
+  color: red;
+}
