@@ -103,17 +103,19 @@ $(document).ready(function () {
   $('.new-tweet form').on('submit', (ev) => {
     ev.preventDefault();
     const formData = $(ev.target).serialize();
-    console.log(formData);
-    $.ajax({
-      method: 'POST',
-      url: `${ROOT_URL}/tweets`,
-      data: formData
-    })
-    .done(function () {
-      $('.message').val("");
-      fetchTweets();
-    })
-    .fail(console.error)
+    if($('.message').val().length > 140 || $('.message').val().length === null) {
+      alert("your message is either empty or too long!");
+    } else {
+      $.ajax({
+        method: 'POST',
+        url: `${ROOT_URL}/tweets`,
+        data: formData
+      })
+      .done(function () {
+        $('.message').val("");
+        fetchTweets();
+      })
+    }
   });
 
 
