@@ -3,7 +3,6 @@
  * jQuery is already loaded
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
-
 var data = [
   {
     "user": {
@@ -51,18 +50,11 @@ var data = [
   }
 ];
 
-const renderTweets = (tweets) => {
-  // loops thru tweets
-  var tweetsContainer = $('#tweets-container');
-  tweets.forEach( (tweet) => {
-    const result = createTweetElement(tweet);
-    tweetsContainer.prepend(result);
-  })
-  // calls createTweetElement for each tweet
-  // takes return value and appends it to the tweets container
-};
+$(document).ready(function () {
 
-const createTweetElement = (newTweet) => {
+  const ROOT_URL = 'http://localhost:8080';
+
+  const createTweetElement = (newTweet) => {
   return `
     <article class="tweet">
       <header>
@@ -85,8 +77,16 @@ const createTweetElement = (newTweet) => {
   `;
 }
 
-$(document).ready(function () {
-  const ROOT_URL = 'http://localhost:8080';
+  const renderTweets = (tweets) => {
+  // loops thru tweets
+  var tweetsContainer = $('#tweets-container');
+  tweets.forEach( (tweet) => {
+    const result = createTweetElement(tweet);
+    tweetsContainer.prepend(result);
+  })
+  // calls createTweetElement for each tweet
+  // takes return value and appends it to the tweets container
+};
   // TODO:
   // Create fetchTweets() to get content from /tweets
   //   - Ajax GET request

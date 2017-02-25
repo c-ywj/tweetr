@@ -11,6 +11,43 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
 
   console.log(`Connected to mongodb: ${MONGODB_URI}`);
 
-  db.close();
+  function getTweets(callback) {
+    db.collection("tweets").find().toArray(callback);
+  }
+
+  getTweets((err, tweets) => {
+    if (err) throw err;
+
+    console.log("Logging each tweet:");
+    for(let tweet of tweets) {
+      console.log(tweet);
+    }
+
+    db.close();
+  });
+
+// short version of code block below, does the same thing.
+  // db.collection("tweets").find().toArray((err, results) => {
+  //   if(err) throw err;
+
+  //   console.log(results);
+
+  //   db.close();
+  // });
+
+
+// long version of accessing "tweets" collection in "tweeter" DB, returns DOC's in an array.
+  // db.collection("tweets").find({}, (err, result) => {
+  //   if (err) throw err;
+  //   console.log("for each item yielded by the cursor: ");
+
+  //   result.toArray((err, resultsArray) => {
+  //     if (err) throw err;
+
+  //     console.log("results.toArray:", resultsArray);
+  //   });
+
+  //   db.close();
+  // });
 
 });
