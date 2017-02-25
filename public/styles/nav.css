@@ -20,3 +20,21 @@
   line-height: 2em;
   padding-left: 10px;
 }
+
+#composeButton {
+  width: 105px;
+  height: 43px;
+  position: absolute;
+  right: 50px;
+  border-radius: 7px;
+  background-color: white;
+  margin-top: 18px;
+}
+
+#composeButton:hover {
+  opacity: 0.7;
+}
+
+#compuseButton span {
+  color: teal;
+}

@@ -103,7 +103,7 @@ $(document).ready(function () {
   $('.new-tweet form').on('submit', (ev) => {
     ev.preventDefault();
     const formData = $(ev.target).serialize();
-    if($('.message').val().length > 140 || $('.message').val().length === null) {
+    if($('.message').val().length > 140 || $('.message').val() === '') {
       alert("your message is either empty or too long!");
     } else {
       $.ajax({
@@ -117,6 +117,11 @@ $(document).ready(function () {
       })
     }
   });
+
+  $('#composeButton').on('click', () => {
+      $('.new-tweet').slideToggle(200);
+      $('.message').focus();
+  })
 
 
     // Ajax POST request to /tweets with data = formData
