@@ -1,8 +1,32 @@
 $(document).ready(function () {
 
   const ROOT_URL = 'http://localhost:8080';
+  // Converts Date.now() to readable units
+  const calcDaysAgo = function (date_past) {
+  // get total seconds between the times
+  let delta = Math.abs(Date.now() - date_past) / 1000;
+  let timeMessage = ``;
+
+  if (delta >= 86400) {
+    // calculate (and subtract) whole days
+    delta = Math.floor(delta / 86400);
+    timeMessage += `${delta} day(s) ago`
+  } else if (delta >= 3600) {
+    // calculate (and subtract) whole hours
+    delta = Math.floor(delta / 3600) % 24;
+    timeMessage += `${delta} hour(s) ago`
+  } else if (delta >= 60) {
+    // calculate (and subtract) whole minutes
+    delta = Math.floor(delta / 60) % 60;
+    timeMessage += `${delta} minute(s) ago`
+  } else {
+    timeMessage += `Just now!`
+  }
+  return timeMessage;
+  };
 
   const createTweetElement = (newTweet) => {
+    const timeAgo = calcDaysAgo(newTweet.created_at)
   return `
     <article class="tweet">
       <header>
@@ -14,7 +38,7 @@ $(document).ready(function () {
         ${newTweet.content.text}
       </p>
       <footer>
-        <span>${newTweet.created_at}</span>
+        <span>${timeAgo}</span>
         <div class="footer-icons">
           <i class="fa fa-flag" aria-hidden="true"></i>
           <i class="fa fa-retweet" aria-hidden="true"></i>
@@ -23,22 +47,16 @@ $(document).ready(function () {
       </footer>
     </article>
   `;
-}
-
+  }
+  //Renders HTML block for new tweets posted
   const renderTweets = (tweets) => {
-  // loops thru tweets
   var tweetsContainer = $('#tweets-container');
-  tweets.forEach( (tweet) => {
-    const result = createTweetElement(tweet);
-    tweetsContainer.prepend(result);
-  })
-  // calls createTweetElement for each tweet
-  // takes return value and appends it to the tweets container
-};
-  // TODO:
-  // Create fetchTweets() to get content from /tweets
-  //   - Ajax GET request
-  //   - renderTweets inside .done()
+    tweets.forEach( (tweet) => {
+      const result = createTweetElement(tweet);
+      tweetsContainer.prepend(result);
+    })
+  };
+  //Loads all tweets from database
   const fetchTweets = () => {
     $.ajax({
       method: 'GET',
@@ -47,10 +65,11 @@ $(document).ready(function () {
     .done(renderTweets)
     .fail(console.error)
   };
-
+  //Ajax POST handler for new tweets posts
   $('.new-tweet form').on('submit', (ev) => {
     ev.preventDefault();
     const formData = $(ev.target).serialize();
+
     if($('.message').val().length > 140 || $('.message').val() === '') {
       alert("your message is either empty or too long!");
     } else {
@@ -65,19 +84,12 @@ $(document).ready(function () {
       })
     }
   });
-
+  //Adds slide toggle animation to "compose" button
   $('#composeButton').on('click', () => {
       $('.new-tweet').slideToggle(200);
       $('.message').focus();
   })
 
-
-    // Ajax POST request to /tweets with data = formData
-    // .done = things went well
-    //   reload tweets
-    // .fail = things went wrong
    fetchTweets();
-
 });
-
 
