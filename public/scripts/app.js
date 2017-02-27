@@ -70,8 +70,10 @@ $(document).ready(function () {
     ev.preventDefault();
     const formData = $(ev.target).serialize();
 
-    if($('.message').val().length > 140 || $('.message').val() === '') {
-      alert("your message is either empty or too long!");
+    if($('.message').val().length > 140) {
+      alert("You've got too much to say.. I mean.. tweet...");
+    } else if ($('.message').val() === '') {
+      alert("Empty tweet? How boring is that?!")
     } else {
       $.ajax({
         method: 'POST',

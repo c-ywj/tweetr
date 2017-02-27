@@ -17,7 +17,6 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
 
   getTweets((err, tweets) => {
     if (err) throw err;
-
     console.log("Logging each tweet:");
     for(let tweet of tweets) {
       console.log(tweet);
@@ -25,7 +24,7 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
 
     db.close();
   });
-
+});
 // short version of code block below, does the same thing.
   // db.collection("tweets").find().toArray((err, results) => {
   //   if(err) throw err;
@@ -49,5 +48,3 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
 
   //   db.close();
   // });
-
-});
